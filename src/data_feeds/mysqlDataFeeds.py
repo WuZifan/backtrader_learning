@@ -50,17 +50,17 @@ class MySQLDataMarketA(DataBase):
         这里每次都只加载一天的，所以要用fetch_one
         :return:
         '''
-        one_row = self.result.fetch_one()
+        one_row = self.result.fetchone()
         if one_row is None:
             return False
 
-        self.lines.datetime[0] = date2num(one_row[1])
-        self.lines.open[0] = float(one_row[2])
-        self.lines.close[0] = float(one_row[3])
-        self.lines.high[0] = float(one_row[4])
-        self.lines.low[0] = float(one_row[5])
-        self.lines.volume[0] = float(one_row[6])
-        self.liness.amount[0] = float(one_row[7])
+        self.lines.datetime[0] = date2num(one_row[0])
+        self.lines.open[0] = float(one_row[1])
+        self.lines.close[0] = float(one_row[2])
+        self.lines.high[0] = float(one_row[3])
+        self.lines.low[0] = float(one_row[4])
+        self.lines.volume[0] = float(one_row[5])
+        self.lines.amount[0] = float(one_row[6])
         self.lines.openinterest[0] = -1
         return True
 
