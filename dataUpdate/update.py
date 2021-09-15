@@ -1,3 +1,9 @@
+import sys
+import os
+
+sys.path.append('/Users/roland/vscode_program/backtrader_learning')
+sys.path.insert(0,'/Users/roland/vscode_program/backtrader_learning/dataUpdate')
+
 from sqlalchemy.orm import Session
 from dataUpdate import engine
 from dataUpdate.model.basicinfo import StockBasic
@@ -26,4 +32,10 @@ if __name__ == '__main__':
 
     sess = Session(engine)
 
-    tempUpdateService.temp_update_stock_basic_with_swl1(sess)
+    all = sess.query(StockBasic).all()
+    for stk in all:
+        print(stk.code)
+        break
+
+    sess.close()
+    # tempUpdateService.temp_update_stock_basic_with_swl1(sess)

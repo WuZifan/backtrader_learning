@@ -1,10 +1,8 @@
-dataUpdate.model package
+model
 ========================
 
-Submodules
-----------
 
-dataUpdate.model.basicinfo module
+basicinfo.py
 ---------------------------------
 
 .. automodule:: dataUpdate.model.basicinfo
@@ -12,8 +10,14 @@ dataUpdate.model.basicinfo module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+tradingInfo.py
+-----------------------------------
+
+.. automodule:: dataUpdate.model.tradingInfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 .. automodule:: dataUpdate.model
    :members:

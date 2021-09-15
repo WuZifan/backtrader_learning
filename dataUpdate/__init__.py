@@ -5,9 +5,12 @@ import logging
 import sys
 import os
 
+sys.path.append('/Users/roland/vscode_program/backtrader_learning')
+sys.path.insert(0,'/Users/roland/vscode_program/backtrader_learning/dataUpdate')
+
 
 # 数据库相关
-with open('./config.json','r') as f:
+with open('../config.json','r') as f:
     mysqlConfig = json.load(f)
 
 SQLALCHEMY_DATABASE_URI ="mysql+pymysql://{username}:{passsword}@{host}:{port}/{database}?charset=utf8&use_unicode=1".format(

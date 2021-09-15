@@ -1,35 +1,31 @@
-
 import backtrader as bt
 
 
 class LineCrossStrategy(bt.Strategy):
-
-    params= (
-        ('maperiod',60),
+    params = (
+        ('maperiod', 5),
     )
 
-    def log(self,txt,dt = None):
+    def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
-
 
     def __init__(self):
         self.dataclose = self.datas[0].close
 
-        self.sma5 = bt.indicators.MovingAverageSimple(self.datas[0],period = 5)
-        self.sma20 = bt.indicators.MovingAverageSimple(self.datas[0],period = 20)
-        self.sma60 = bt.indicators.MovingAverageSimple(self.datas[0],period=self.p.maperiod)
+        self.sma5 = bt.indicators.MovingAverageSimple(self.datas[0], period=5)
+        self.sma20 = bt.indicators.MovingAverageSimple(self.datas[0], period=20)
+        self.sma60 = bt.indicators.MovingAverageSimple(self.datas[0], period=self.p.maperiod)
 
-        self.crossOver5and60 = bt.indicators.CrossOver(self.sma5,self.sma60,plot=False)
-        self.crossOverCloseand20 = bt.indicators.CrossOver(self.dataclose,self.sma20,plot=False)
+        self.crossOver5and60 = bt.indicators.CrossOver(self.sma5, self.sma60, plot=False)
+        self.crossOverCloseand20 = bt.indicators.CrossOver(self.dataclose, self.sma20, plot=False)
 
         self.buyPrice = None
         self.order = None
         self.maxProfitPercentage = 0
 
-
     def notify_order(self, order):
-        if order.status in [order.Submitted,order.Accepted]:
+        if order.status in [order.Submitted, order.Accepted]:
             return
 
         if order.status in [order.Completed]:
@@ -37,17 +33,17 @@ class LineCrossStrategy(bt.Strategy):
                 self.buyPrice = order.executed.price
                 self.log('已买入， %.2f' % order.executed.price)
             elif order.issell():
-                self.log('已卖出， %.2f'%order.executed.price)
-        elif order.status in [order.Canceled,order.Margin,order.Rejected]:
+                self.log('已卖出， %.2f' % order.executed.price)
+        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Fail')
 
         self.order = None
 
-    def notify_trade(self,trade):
+    def notify_trade(self, trade):
         # 一买一卖算交易
         if not trade.isclosed:
             return
-        self.log('交易利润，毛利润 %.2f, 净利润 %.2f' %(trade.pnl,trade.pnlcomm))
+        self.log('交易利润，毛利润 %.2f, 净利润 %.2f' % (trade.pnl, trade.pnlcomm))
 
     def next(self):
         # self.log('Close %.2f' % self.dataclose[0])
@@ -85,29 +81,27 @@ class LineCrossStrategy(bt.Strategy):
         严格来说，卖点也属于一种止损，可以理解为是技术面的止损
         :return:
         '''
-        if self.dataclose[0]>self.buyPrice:
+        if self.dataclose[0] > self.buyPrice:
             # 止盈
             return self.sellWhenProfit()
         else:
             # 止损
             return self.sellWhenLoss()
 
-
     def sellWhenLoss(self):
         # 止损方式1：下跌达到某个幅度就止损：
         if (self.buyPrice - self.dataclose[0]) / self.buyPrice >= 0.05:
             return True
 
-
     def sellWhenProfit(self):
         # 1、计算盈利回撤
-        profit_percentage = (self.dataclose[0]-self.buyPrice)/self.buyPrice
-        if profit_percentage>self.maxProfitPercentage:
+        profit_percentage = (self.dataclose[0] - self.buyPrice) / self.buyPrice
+        if profit_percentage > self.maxProfitPercentage:
             self.maxProfitPercentage = profit_percentage
 
-        max_return = 2*0.1*self.maxProfitPercentage+0.01
-        if self.maxProfitPercentage>0.1 and profit_percentage<=(self.maxProfitPercentage-max_return):
-            self.log("卖出，最大收益率为 %.2f，此时收益率为%.2f" %(self.maxProfitPercentage,profit_percentage))
+        max_return = 2 * 0.1 * self.maxProfitPercentage + 0.01
+        if self.maxProfitPercentage > 0.1 and profit_percentage <= (self.maxProfitPercentage - max_return):
+            self.log("卖出，最大收益率为 %.2f，此时收益率为%.2f" % (self.maxProfitPercentage, profit_percentage))
             return True
 
         # 这里可以用crossOver indicator来代替
@@ -120,7 +114,3 @@ class LineCrossStrategy(bt.Strategy):
         if self.crossOverCloseand20[0] == -1:
             self.log(txt='卖出，日线下穿20日均线')
             return True
-
-
-
-

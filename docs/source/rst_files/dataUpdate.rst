@@ -1,8 +1,6 @@
-dataUpdate package
+dataUpdate
 ==================
 
-Subpackages
------------
 
 .. toctree::
    :maxdepth: 4
@@ -11,10 +9,8 @@ Subpackages
    dataUpdate.service
    dataUpdate.util
 
-Submodules
-----------
 
-dataUpdate.update module
+update.py
 ------------------------
 
 .. automodule:: dataUpdate.update
@@ -22,8 +18,6 @@ dataUpdate.update module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: dataUpdate
    :members:

@@ -13,6 +13,7 @@
 import os
 import sys
 import sphinx_rtd_theme
+sys.path.append(os.path.abspath('./../../../backtrader_learning/'))
 sys.path.insert(0, os.path.abspath('./../../dataUpdate/'))
 sys.path.insert(0, os.path.abspath('./../../src/'))
 

@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 
 from backtrader.feed import DataBase
 from backtrader import date2num
+import backtrader as bt
 
 class MySQLDataMarketA(DataBase):
 
@@ -18,6 +19,8 @@ class MySQLDataMarketA(DataBase):
         ('fromdate',datetime.datetime.min),
         ('todate',datetime.datetime.max),
         ('code',''),
+        ('timeframe',bt.TimeFrame.Minutes)
+
     )
 
     lines = (

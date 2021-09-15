@@ -7,10 +7,10 @@ Welcome to backtrader_learning's documentation!
 ===============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 10
    :caption: Contents:
 
-   modules
+   ./rst_files/modules
 
 
 

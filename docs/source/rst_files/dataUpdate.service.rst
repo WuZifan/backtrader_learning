@@ -1,10 +1,16 @@
-dataUpdate.service package
+service
 ==========================
 
-Submodules
-----------
 
-dataUpdate.service.updateService module
+tempUpdateService.py
+-------------------------------------------
+
+.. automodule:: dataUpdate.service.tempUpdateService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+updateService.py
 ---------------------------------------
 
 .. automodule:: dataUpdate.service.updateService
@@ -12,8 +18,6 @@ dataUpdate.service.updateService module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: dataUpdate.service
    :members:

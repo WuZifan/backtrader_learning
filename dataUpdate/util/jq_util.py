@@ -60,21 +60,21 @@ def login_jq():
 
 # login_jq()
 
-if __name__ == '__main__':
-    login_jq()
-    # print(getStockCirculating())
-    jq_code= getJQCode('sh.605339')
-    print(jq_code)
-    q = query(
-        valuation.code,
-        # valuation.day,
-        # valuation.market_cap, # 总市值
-        valuation.circulating_market_cap,  # 流通市值
-        # valuation.capitalization,# 总股本
-        valuation.circulating_cap  # 流通总股本
-    ).filter(
-        valuation.code.in_([jq_code]),
-    )
-
-    ret = get_fundamentals(q)
-    print(ret)
+# if __name__ == '__main__':
+#     login_jq()
+#     # print(getStockCirculating())
+#     jq_code= getJQCode('sh.605339')
+#     print(jq_code)
+#     q = query(
+#         valuation.code,
+#         # valuation.day,
+#         # valuation.market_cap, # 总市值
+#         valuation.circulating_market_cap,  # 流通市值
+#         # valuation.capitalization,# 总股本
+#         valuation.circulating_cap  # 流通总股本
+#     ).filter(
+#         valuation.code.in_([jq_code]),
+#     )
+#
+#     ret = get_fundamentals(q)
+#     print(ret)
