@@ -1,6 +1,5 @@
 akshare==1.1.6
 alabaster==0.7.12
-appnope @ file:///opt/concourse/worker/volumes/live/4f734db2-9ca8-4d8b-5b29-6ca15b4b4772/volume/appnope_1606859466979/work
 attrs==21.2.0
 Babel==2.9.1
 backcall==0.2.0
@@ -28,18 +27,12 @@ imageio==2.8.0
 imagesize==1.2.0
 importlib-metadata==4.8.1
 iniconfig==1.1.1
-ipykernel @ file:///opt/concourse/worker/volumes/live/73e8766c-12c3-4f76-62a6-3dea9a7da5b7/volume/ipykernel_1596206701501/work/dist/ipykernel-5.3.4-py3-none-any.whl
-ipython @ file:///opt/concourse/worker/volumes/live/27d08825-4fae-44a4-4324-8338f92c3ef3/volume/ipython_1604101240866/work
-ipython-genutils @ file:///tmp/build/80754af9/ipython_genutils_1606773439826/work
 itsdangerous==1.1.0
 jdcal==1.4.1
-jedi @ file:///opt/concourse/worker/volumes/live/4fa73a83-ad33-499d-579f-7cca37ef2cee/volume/jedi_1608920700229/work
 Jinja2==2.11.2
 joblib==0.14.1
 jqdatasdk==1.8.6
 jsonpath==0.82
-jupyter-client @ file:///tmp/build/80754af9/jupyter_client_1601311786391/work
-jupyter-core @ file:///opt/concourse/worker/volumes/live/a00c6604-807b-490b-6c3f-c66a22f02fab/volume/jupyter_core_1606148990852/work
 kiwisolver==1.2.0
 llvmlite==0.32.0
 lxml==4.6.2
@@ -56,18 +49,13 @@ packaging==21.0
 pandas==1.2.1
 parso==0.7.0
 pbr==5.5.1
-pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
 phone==0.4.3
-pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
 Pillow==7.1.1
 pluggy==1.0.0
 ply==3.11
-prompt-toolkit @ file:///tmp/build/80754af9/prompt-toolkit_1602688806899/work
 psutil==5.7.0
-ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 py==1.10.0
 py-mini-racer==0.6.0
-Pygments @ file:///tmp/build/80754af9/pygments_1610565767015/work
 pymongo==3.11.4
 PyMySQL==1.0.2
 pyparsing==2.4.7
@@ -109,15 +97,12 @@ thriftpy2==0.4.14
 toml==0.10.2
 torch==1.4.0
 torchvision==0.5.0
-tornado @ file:///opt/concourse/worker/volumes/live/d531d395-893c-4ca1-6a5f-717b318eb08c/volume/tornado_1606942307627/work
 tqdm==4.45.0
-traitlets @ file:///tmp/build/80754af9/traitlets_1602787416690/work
 tushare==1.2.62
 typing-extensions==3.10.0.2
 ujson==1.35
 urllib3==1.25.8
 watchdog==1.0.2
-wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
 webencodings==0.5.1
 websocket-client==0.57.0
 Werkzeug==1.0.1
