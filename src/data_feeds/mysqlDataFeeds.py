@@ -28,6 +28,7 @@ class MySQLDataMarketA(DataBase):
     )
 
     def __init__(self):
+        super(MySQLDataMarketA, self).__init__()
         self.engine = create_engine(
             "mysql+pymysql://{username}:{passsword}@{host}:{port}/{database}?charset=utf8&use_unicode=1".format(
                 username = self.p.username,
@@ -38,12 +39,10 @@ class MySQLDataMarketA(DataBase):
             )
         )
 
-
     def start(self):
         self.conn = self.engine.connect()
         sql = "SELECT `time`,`open`,`close`,`high`,`low`,`volume`,`amount` FROM `TradingInfo` WHERE `code`='" + str(self.p.code) + "' AND `time` between '"+self.p.fromdate.strftime("%Y-%m-%d")+"' and '"+self.p.todate.strftime("%Y-%m-%d")+"' ORDER BY `time` ASC"
         self.result = self.conn.execute(sql)
-
 
     def stop(self):
         self.engine.dispose()
@@ -57,6 +56,7 @@ class MySQLDataMarketA(DataBase):
         if one_row is None:
             return False
 
+
         self.lines.datetime[0] = date2num(one_row[0])
         self.lines.open[0] = float(one_row[1])
         self.lines.close[0] = float(one_row[2])
@@ -65,6 +65,7 @@ class MySQLDataMarketA(DataBase):
         self.lines.volume[0] = float(one_row[5])
         self.lines.amount[0] = float(one_row[6])
         self.lines.openinterest[0] = -1
+        # print(self.lines.open[0])
         return True
 
 
