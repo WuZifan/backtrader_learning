@@ -29,13 +29,17 @@ def update_stock_earing_report(sess):
 
 if __name__ == '__main__':
 
-
     sess = Session(engine)
 
-    all = sess.query(StockBasic).all()
-    for stk in all:
-        print(stk.code)
-        break
+    updateService.update_single_stock_tradinginfo(sess)
 
-    sess.close()
+
+    # sess = Session(engine)
+
+    # all = sess.query(StockBasic).all()
+    # for stk in all:
+    #     print(stk.code)
+    #     break
+
+    # sess.close()
     # tempUpdateService.temp_update_stock_basic_with_swl1(sess)

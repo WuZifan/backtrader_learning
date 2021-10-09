@@ -8,3 +8,12 @@
 * 5）pip install -r requirements.txt
 
 # 2、使用说明
+
+## 2.1 数据库配置
+
+* 1）创建好mysql-server
+* 2）创建名为road2rich2的数据库
+* 3）在本项目 ./dataUpdata/mysql_tables 下共有3个sql文件
+* 4）利用navicat 打开road2rich2数据库，右击road2rich2数据库，选择execute sql file，选择3）中的sql文件，创建表。
+
+## 2.2 导入数据

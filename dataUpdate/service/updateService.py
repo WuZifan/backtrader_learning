@@ -4,6 +4,7 @@ import time
 import akshare as ak
 import pandas as pd
 import sqlalchemy
+from sqlalchemy import log
 from tqdm import tqdm
 
 from sqlalchemy import func
@@ -22,6 +23,49 @@ date_formate = '%Y-%m-%d'
         3.3 如果开始时间和结束时间为None，那么添加20050101 到今天的交易信息
 '''
 
+
+def update_single_stock_tradinginfo(sess,stock_code='sh.600000',start_date='2010-01-01',end_date='2020-12-31'):
+    """更新单个股票的交易数据
+
+    Args:
+        sess ([type]): [description]
+        stock_code (str, optional): [description]. Defaults to 'sh.600000'.
+        start_date (str, optional): [description]. Defaults to '2010-01-01'.
+        end_date (str, optional): [description]. Defaults to '2020-12-31'.
+    """
+    
+
+
+    stock_trading_infos = sess.query(func.min(TradingInfo.time),func.max(TradingInfo.time)).filter(TradingInfo.code==stock_code).all()
+
+    if len(stock_trading_infos)==0:
+        start_date_str = start_date
+        end_date_str = end_date
+    else:
+        input_start_date = datetime.datetime.strptime(start_date,date_formate)
+        input_end_date = datetime.datetime.strptime(end_date,date_formate)
+
+        db_start_date = stock_trading_infos[0][0]
+        db_end_date = stock_trading_infos[0][1]
+
+        if db_start_date<=input_start_date and input_end_date<=db_end_date:
+            logger.info("Stock {stockname} trading data between {startdate} and {enddate} already exists"
+            .format(stockname=stock_code,startdate=start_date,enddate=end_date))
+        else:
+            start_date = db_start_date if db_start_date<=input_start_date else input_start_date
+            end_date = db_end_date if db_end_date>=input_end_date else input_end_date
+
+            # 删除数据
+            sess.query(TradingInfo).filter(TradingInfo.code==stock_code).delete()
+
+            # 写入数据
+            start_date_str = start_date.strftime(date_formate)
+            end_date_str = end_date.strftime(date_formate)
+            temp_df = bs_util.getStockHistoryInfo(stock_code, start_date_str, end_date_str)
+            temp_df.to_sql(TradingInfo.__tablename__, con=engine, if_exists='append', index=False)
+            sess.commit()
+            logger.info("Stock {stockname} trading data updates! Now its between {startdate} and {enddate}"
+            .format(stockname=stock_code,startdate=start_date,enddate=end_date))
 
 def update_stock_tradinginfo(sess):
     '''
