@@ -33,39 +33,46 @@ def update_single_stock_tradinginfo(sess,stock_code='sh.600000',start_date='2010
         start_date (str, optional): [description]. Defaults to '2010-01-01'.
         end_date (str, optional): [description]. Defaults to '2020-12-31'.
     """
-    
-
-
     stock_trading_infos = sess.query(func.min(TradingInfo.time),func.max(TradingInfo.time)).filter(TradingInfo.code==stock_code).all()
-
-    if len(stock_trading_infos)==0:
+    logger.debug("{},{}".format(len(stock_trading_infos),stock_trading_infos))
+    if stock_trading_infos[0][0] is None:
+        # 原始数据库里面没有数据
         start_date_str = start_date
         end_date_str = end_date
     else:
+        # 原始数据库里面有数据
         input_start_date = datetime.datetime.strptime(start_date,date_formate)
         input_end_date = datetime.datetime.strptime(end_date,date_formate)
 
+        # 确定时间范围
         db_start_date = stock_trading_infos[0][0]
         db_end_date = stock_trading_infos[0][1]
-
         if db_start_date<=input_start_date and input_end_date<=db_end_date:
+            # 目标时间范围已经存在
             logger.info("Stock {stockname} trading data between {startdate} and {enddate} already exists"
             .format(stockname=stock_code,startdate=start_date,enddate=end_date))
+            return
         else:
-            start_date = db_start_date if db_start_date<=input_start_date else input_start_date
-            end_date = db_end_date if db_end_date>=input_end_date else input_end_date
+            # 目标时间范围不存在
+            real_start_date = db_start_date if db_start_date<=input_start_date else input_start_date
+            real_end_date = db_end_date if db_end_date>=input_end_date else input_end_date
 
-            # 删除数据
-            sess.query(TradingInfo).filter(TradingInfo.code==stock_code).delete()
+            start_date_str = real_start_date.strftime(date_formate)
+            end_date_str = real_end_date.strftime(date_formate)
 
-            # 写入数据
-            start_date_str = start_date.strftime(date_formate)
-            end_date_str = end_date.strftime(date_formate)
-            temp_df = bs_util.getStockHistoryInfo(stock_code, start_date_str, end_date_str)
-            temp_df.to_sql(TradingInfo.__tablename__, con=engine, if_exists='append', index=False)
-            sess.commit()
-            logger.info("Stock {stockname} trading data updates! Now its between {startdate} and {enddate}"
-            .format(stockname=stock_code,startdate=start_date,enddate=end_date))
+    # 删除数据
+    sess.query(TradingInfo).filter(TradingInfo.code==stock_code).delete()
+    sess.commit()
+
+    # 写入数据
+    bs_util.login_bs()
+    temp_df = bs_util.getStockHistoryInfo(stock_code, start_date_str, end_date_str)
+    if len(temp_df) == 0:
+            logger.info('Nothing to update for {} between {} and {}'.format(stock_code, start_date_str, end_date_str))
+    temp_df.to_sql(TradingInfo.__tablename__, con=engine, if_exists='append', index=False)
+    sess.commit()
+    logger.info("Stock {stockname} trading data updates! Now its between {startdate} and {enddate}"
+    .format(stockname=stock_code,startdate=start_date,enddate=end_date))
 
 def update_stock_tradinginfo(sess):
     '''

@@ -5,8 +5,8 @@ import logging
 import sys
 import os
 
-sys.path.append('/Users/roland/vscode_program/backtrader_learning')
-sys.path.insert(0,'/Users/roland/vscode_program/backtrader_learning/dataUpdate')
+sys.path.append('../')
+sys.path.insert(0,'./')
 
 
 # 数据库相关
